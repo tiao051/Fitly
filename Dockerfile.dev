@@ -1,0 +1,15 @@
+FROM mcr.microsoft.com/dotnet/sdk:9.0-preview
+
+WORKDIR /app
+
+# Copy csproj và restore sớm (tăng tốc độ build)
+COPY ./auth_services/auth_services/auth_services.csproj ./auth_services/
+RUN dotnet restore ./auth_services/auth_services.csproj
+
+# Copy toàn bộ code vào container
+COPY ./auth_services ./auth_services
+
+WORKDIR /app/auth_services
+
+# Command chạy hot reload
+CMD ["dotnet", "watch", "run", "--project", "auth_services.csproj", "--urls=http://0.0.0.0:80"]

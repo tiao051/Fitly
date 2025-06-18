@@ -1,0 +1,50 @@
+# Dotnet build artifacts
+bin/
+obj/
+out/
+
+# IDEs
+.vscode/
+.idea/
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Logs
+*.log
+logs/
+*.pid
+
+# Docker (optional)
+.dockerignore
+docker-compose.override.yml
+.env
+*.tar
+*.gz
+*.swp
+
+# Entity Framework
+**/Migrations/*Snapshot.cs
+*.db
+
+# Secrets & Config
+appsettings.Development.json
+secrets.json
+**/secrets.json
+**/.secret
+**/.dotnet/user-secrets/
+
+# Frontend (if using)
+node_modules/
+coverage/
+
+# AI uploads / temp
+uploads/
+temp/
+cache/
+
+# OS files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,34 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: fitly_postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: fitly_auth
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  auth_services:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: fitly_auth
+    volumes:
+      - ./auth_services:/app
+    working_dir: /app/auth_services
+    command: ["dotnet", "watch", "run", "--project", "auth_services.csproj", "--urls=http://0.0.0.0:80"]
+    ports:
+      - "5000:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:80
+      - ConnectionStrings__Default=Host=postgres;Port=5432;Database=fitly_auth;Username=postgres;Password=123
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:
