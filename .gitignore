@@ -20,7 +20,7 @@ logs/
 # Docker (optional)
 .dockerignore
 docker-compose.override.yml
-.env
+.env.*
 *.tar
 *.gz
 *.swp

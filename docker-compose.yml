@@ -6,8 +6,8 @@ services:
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 123
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: fitly_auth
     volumes:
       - postgres_data:/var/lib/postgresql/data
@@ -26,7 +26,8 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://0.0.0.0:80
-      - ConnectionStrings__Default=Host=postgres;Port=5432;Database=fitly_auth;Username=postgres;Password=123
+      - ConnectionStrings__Default=Host=postgres;Port=5432;Database=fitly_auth;Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}
+
     depends_on:
       - postgres
 
