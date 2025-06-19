@@ -1,3 +1,5 @@
+version: "3.8"
+
 services:
   postgres:
     image: postgres:16
@@ -11,6 +13,19 @@ services:
       POSTGRES_DB: fitly_auth
     volumes:
       - postgres_data:/var/lib/postgresql/data
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: fitly_rabbitmq
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ__USERNAME}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ__PASSWORD}
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
 
   auth_services:
     build:
@@ -27,9 +42,15 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://0.0.0.0:80
       - ConnectionStrings__Default=Host=postgres;Port=5432;Database=fitly_auth;Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}
-
+      - RABBITMQ__HOST=rabbitmq
+      - RABBITMQ__PORT=${RABBITMQ__PORT}
+      - RABBITMQ__USERNAME=${RABBITMQ__USERNAME}
+      - RABBITMQ__PASSWORD=${RABBITMQ__PASSWORD}
+      - RABBITMQ__VIRTUALHOST=${RABBITMQ__VIRTUALHOST}
     depends_on:
       - postgres
+      - rabbitmq
 
 volumes:
   postgres_data:
+  rabbitmq_data:

@@ -1,14 +1,20 @@
 using auth_services.Data;
+using auth_services.Messaging;
 using auth_services.Repositories;
 using auth_services.Services;
-using Microsoft.OpenApi.Models;
+using DotNetEnv;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+DotNetEnv.Env.Load();
+builder.Configuration
+    .AddEnvironmentVariables();
+
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("Default")));
 
+builder.Services.AddSingleton<IRabbitMQPublisher, RabbitMQPublisher>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 
