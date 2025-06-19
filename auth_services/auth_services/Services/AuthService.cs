@@ -2,6 +2,7 @@
 using auth_services.Models;
 using auth_services.Repositories;
 using auth_services.Messaging;
+using auth_services.Helpers;
 
 namespace auth_services.Services
 {
@@ -9,11 +10,13 @@ namespace auth_services.Services
     {
         private readonly IUserRepository _repo;
         private readonly IRabbitMQPublisher _publisher;
+        private readonly IConfiguration _config;
 
-        public AuthService(IUserRepository repo, IRabbitMQPublisher publisher)
+        public AuthService(IUserRepository repo, IRabbitMQPublisher publisher, IConfiguration config)
         {
             _repo = repo;
             _publisher = publisher;
+            _config = config;
         }
 
         public async Task<string> RegisterAsync(RegisterRequest request)
@@ -44,6 +47,21 @@ namespace auth_services.Services
             await _publisher.PublishAsync(userRegisteredEvent, "user-registered");
 
             return "User registered successfully";
+        }
+        public async Task<LoginResponse> LoginAsync(LoginRequest request)
+        {
+            var user = await _repo.GetByEmailAsync(request.Email);
+            if (user == null || !BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash))
+                throw new Exception("Invalid email or password.");
+
+            var token = new JwtTokenGenerator().GenerateToken(user);
+
+            return new LoginResponse
+            {
+                Token = token,
+                Email = user.Email,
+                Role = user.Role
+            };
         }
     }
 }

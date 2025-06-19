@@ -25,5 +25,20 @@ namespace auth_services.Controllers
                 return BadRequest(new { error = ex.Message });
             }
         }
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginRequest req)
+        {
+            Console.WriteLine("Login test");
+            try
+            {
+                var result = await _authService.LoginAsync(req);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return Unauthorized(new { error = ex.Message });
+            }
+        }
+
     }
 }
