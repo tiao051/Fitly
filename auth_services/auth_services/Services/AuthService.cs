@@ -3,6 +3,7 @@ using auth_services.Models;
 using auth_services.Repositories;
 using auth_services.Messaging;
 using auth_services.Helpers;
+using Newtonsoft.Json;
 
 namespace auth_services.Services
 {
@@ -21,6 +22,7 @@ namespace auth_services.Services
 
         public async Task<string> RegisterAsync(RegisterRequest request)
         {
+            Console.WriteLine("[DEBUG] UserRegisteredEvent:");
             if (request.Password != request.ConfirmPassword)
                 throw new Exception("Passwords do not match.");
 
@@ -44,6 +46,8 @@ namespace auth_services.Services
                 RegisteredAt = DateTime.UtcNow
             };
 
+            Console.WriteLine("[DEBUG] Sending UserRegisteredEvent to RabbitMQ:");
+            Console.WriteLine(JsonConvert.SerializeObject(userRegisteredEvent, Formatting.Indented));
             await _publisher.PublishAsync(userRegisteredEvent, "user-registered");
 
             return "User registered successfully";
