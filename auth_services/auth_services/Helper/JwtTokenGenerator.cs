@@ -13,6 +13,7 @@ namespace auth_services.Helpers
             try
             {
                 // Đọc các biến môi trường
+                Console.WriteLine("JWT__KEY = " + Environment.GetEnvironmentVariable("JWT__KEY"));
                 var key = Environment.GetEnvironmentVariable("JWT__KEY");
                 if (string.IsNullOrWhiteSpace(key))
                     throw new Exception("JWT__KEY is missing or empty");
