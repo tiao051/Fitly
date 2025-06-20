@@ -53,7 +53,10 @@ namespace auth_services.Helpers
                     expires: DateTime.UtcNow.AddMinutes(expires),
                     signingCredentials: credentials
                 );
+                var jwt = new JwtSecurityTokenHandler().WriteToken(token);
 
+                Console.WriteLine("Generated JWT Token:");
+                Console.WriteLine(jwt);
                 return new JwtSecurityTokenHandler().WriteToken(token);
             }
             catch (Exception ex)
