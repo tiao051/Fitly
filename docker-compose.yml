@@ -41,6 +41,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://0.0.0.0:80
+      - Jwt__Key=${JWT__KEY} 
       - ConnectionStrings__Default=Host=postgres;Port=5432;Database=fitly_auth;Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}
       - RABBITMQ__HOST=rabbitmq
       - RABBITMQ__PORT=${RABBITMQ__PORT}

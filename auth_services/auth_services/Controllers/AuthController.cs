@@ -39,6 +39,5 @@ namespace auth_services.Controllers
                 return Unauthorized(new { error = ex.Message });
             }
         }
-
     }
 }
