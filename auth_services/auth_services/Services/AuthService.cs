@@ -39,16 +39,16 @@ namespace auth_services.Services
             await _repo.AddAsync(user);
 
             // Publish message to RabbitMQ
-            var userRegisteredEvent = new
-            {
-                UserId = user.UserId,
-                Email = user.Email,
-                RegisteredAt = DateTime.UtcNow
-            };
+            // var userRegisteredEvent = new
+            // {
+            //     UserId = user.UserId,
+            //     Email = user.Email,
+            //     RegisteredAt = DateTime.UtcNow
+            // };
 
-            Console.WriteLine("[DEBUG] Sending UserRegisteredEvent to RabbitMQ:");
-            Console.WriteLine(JsonConvert.SerializeObject(userRegisteredEvent, Formatting.Indented));
-            await _publisher.PublishAsync(userRegisteredEvent, "user-registered");
+            // Console.WriteLine("[DEBUG] Sending UserRegisteredEvent to RabbitMQ:");
+            // Console.WriteLine(JsonConvert.SerializeObject(userRegisteredEvent, Formatting.Indented));
+            // await _publisher.PublishAsync(userRegisteredEvent, "user-registered");
 
             return "User registered successfully";
         }

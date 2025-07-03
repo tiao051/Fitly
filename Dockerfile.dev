@@ -1,15 +1,21 @@
 FROM mcr.microsoft.com/dotnet/sdk:9.0
-
 WORKDIR /app
 
-# Copy csproj và restore sớm (tăng tốc độ build)
-COPY ./auth_services/auth_services/auth_services.csproj ./auth_services/
-RUN dotnet restore ./auth_services/auth_services.csproj
+# Install dotnet watch tool
+RUN dotnet tool install --global dotnet-watch
+ENV PATH="${PATH}:/root/.dotnet/tools"
 
-# Copy toàn bộ code vào container
-COPY ./auth_services ./auth_services
+# Copy project file và restore dependencies
+COPY auth_services/auth_services/auth_services.csproj auth_services/auth_services/
+RUN dotnet restore auth_services/auth_services/auth_services.csproj
 
-WORKDIR /app/auth_services
+# Copy toàn bộ source code
+COPY . .
 
-# Command chạy hot reload
+WORKDIR /app/auth_services/auth_services
+
+# Expose port 80 (để khớp với docker-compose)
+EXPOSE 80
+
+# Start với hot reload
 CMD ["dotnet", "watch", "run", "--project", "auth_services.csproj", "--urls=http://0.0.0.0:80"]
