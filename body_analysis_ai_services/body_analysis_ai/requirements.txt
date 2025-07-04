@@ -1,3 +1,8 @@
-flask
+fastapi
+uvicorn
 requests
 pillow
+flask
+mediapipe
+opencv-python
+numpy
