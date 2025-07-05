@@ -1,8 +1,7 @@
 fastapi
 uvicorn
-requests
-pillow
-flask
-mediapipe
+ultralytics
 opencv-python
 numpy
+python-multipart
+pillow
