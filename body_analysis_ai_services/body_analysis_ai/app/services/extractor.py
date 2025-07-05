@@ -2,8 +2,7 @@ import cv2
 import numpy as np
 from ultralytics import YOLO
 
-# Load YOLOv8 pose model
-model = YOLO('yolov8n-pose.pt')  # nano version for faster inference
+model = YOLO('yolov8m-pose.pt') 
 
 def extract_landmarks(image):
     """
