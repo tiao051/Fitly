@@ -3,11 +3,12 @@ from app.services.extractor import COCO_KEYPOINTS
 from app.utils.pose_helpers import validate_pose
 
 def analyze_body_shape_optimized(landmarks, image_shape):
-    pose_issues = validate_pose(landmarks)
-    if pose_issues:
+    pose_validation = validate_pose(landmarks)
+    if not pose_validation['valid']:
         return {
             "valid": False,
-            "pose_issues": pose_issues,
+            "pose_issues": pose_validation['pose_issues'],
+            "diagnostics": pose_validation['diagnostics'],
             "message": "Pose không hợp lệ, vui lòng chụp lại theo hướng dẫn."
         }
     

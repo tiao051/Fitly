@@ -48,7 +48,7 @@ def is_pose_tilted(keypoints, threshold=20):
     return issues, angles
 
 
-def is_twisted_body(keypoints, shoulder_hip_ratio_threshold=1.3):
+def is_twisted_body(keypoints, shoulder_hip_ratio_threshold=1.68):
     left_shoulder = get_keypoint_by_name(keypoints, 'LEFT_SHOULDER')
     right_shoulder = get_keypoint_by_name(keypoints, 'RIGHT_SHOULDER')
     left_hip = get_keypoint_by_name(keypoints, 'LEFT_HIP')
@@ -62,6 +62,15 @@ def is_twisted_body(keypoints, shoulder_hip_ratio_threshold=1.3):
 
     shoulder_width = abs(left_shoulder['x'] - right_shoulder['x'])
     hip_width = abs(left_hip['x'] - right_hip['x'])
+    
+    # DEBUG: In ra các giá trị
+    print(f"DEBUG - Left shoulder: {left_shoulder}")
+    print(f"DEBUG - Right shoulder: {right_shoulder}")
+    print(f"DEBUG - Left hip: {left_hip}")
+    print(f"DEBUG - Right hip: {right_hip}")
+    print(f"DEBUG - Shoulder width: {shoulder_width}")
+    print(f"DEBUG - Hip width: {hip_width}")
+    print(f"DEBUG - Ratio: {shoulder_width / hip_width}")
 
     if hip_width == 0:
         return False, None
