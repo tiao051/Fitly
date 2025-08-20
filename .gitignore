@@ -1,52 +1,110 @@
-# Dotnet build artifacts
+# .NET Build artifacts
 bin/
 obj/
 out/
+*.dll
+*.exe
+*.pdb
 
-# IDEs
-.vscode/
-.idea/
-.vs/
+# User-specific files
+*.rsuser
 *.suo
 *.user
 *.userosscache
 *.sln.docstates
+*.csproj.user
+
+# IDEs and editors
+.vscode/
+.idea/
+.vs/
+*.swp
+*.swo
+*~
+
+# Environment files
 .env
+.env.local
+.env.*.local
+
+# BUT KEEP .env.example (don't ignore this!)
+# .env.example should be committed
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+ENV/
+env.bak/
+venv.bak/
+pip-log.txt
+pip-delete-this-directory.txt
+.pytest_cache/
+
+# AI Models (downloaded at runtime)
+*.pt
+*.onnx
+*.weights
+yolov8*.pt
+models/weights/
+
+# Docker
+docker-compose.override.yml
+.dockerignore
 
 # Logs
 *.log
 logs/
-*.pid
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# Docker (optional)
-.dockerignore
-docker-compose.override.yml
-.env.*
-*.tar
-*.gz
-*.swp
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
 
 # Entity Framework
 **/Migrations/*Snapshot.cs
 *.db
+*.sqlite
 
-# Secrets & Config
+# Secrets & sensitive configs
 appsettings.Development.json
 secrets.json
 **/secrets.json
 **/.secret
 **/.dotnet/user-secrets/
 
-# Frontend (if using)
-node_modules/
-coverage/
-
-# AI uploads / temp
+# Temporary files
 uploads/
 temp/
 cache/
+tmp/
+temp_*
 
-# OS files
+# OS generated files
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db
-".env" 
+
+# Node.js (if any frontend)
+node_modules/
+coverage/
+.nyc_output/
+
+# JetBrains
+*.iml
+*.ipr
+*.iws
+.idea/ 
