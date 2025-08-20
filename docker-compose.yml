@@ -52,6 +52,18 @@ services:
       - postgres
       - rabbitmq
 
+  body_analysis_ai:
+    build:
+      context: ./body_analysis_ai_services/body_analysis_ai
+      dockerfile: Dockerfile
+    container_name: fitly_body_analysis
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./body_analysis_ai_services/body_analysis_ai:/app
+    environment:
+      - PYTHONUNBUFFERED=1
+
 volumes:
   postgres_data:
   rabbitmq_data:

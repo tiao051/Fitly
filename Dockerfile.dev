@@ -6,11 +6,11 @@ RUN dotnet tool install --global dotnet-watch
 ENV PATH="${PATH}:/root/.dotnet/tools"
 
 # Copy project file và restore dependencies
-COPY auth_services/auth_services/auth_services.csproj auth_services/auth_services/
+COPY auth_services/auth_services/*.csproj auth_services/auth_services/
 RUN dotnet restore auth_services/auth_services/auth_services.csproj
 
 # Copy toàn bộ source code
-COPY . .
+COPY auth_services/ auth_services/
 
 WORKDIR /app/auth_services/auth_services
 
