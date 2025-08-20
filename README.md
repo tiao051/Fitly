@@ -1,15 +1,15 @@
 # Fitly - Fitness Application
 
-Ứng dụng fitness với microservices architecture sử dụng .NET, Python AI và Docker.
+A fitness application with microservices architecture using .NET, Python AI, and Docker.
 
 ## Services
 
-- **Auth Services**: Xác thực người dùng (C# .NET 9)
-- **Body Analysis AI**: Phân tích hình dạng cơ thể (Python + YOLOv8)
-- **User Services**: Quản lý người dùng
-- **Workout Services**: Quản lý bài tập
-- **Meal Services**: Quản lý chế độ ăn
-- **Notification Services**: Thông báo
+- **Auth Services**: User authentication (C# .NET 9)
+- **Body Analysis AI**: Body shape analysis (Python + YOLOv8)
+- **User Services**: User management
+- **Workout Services**: Workout management
+- **Meal Services**: Meal management
+- **Notification Services**: Notifications
 
 ## Prerequisites
 
@@ -32,19 +32,20 @@ cp .env.example .env
 
 3. **Start all services:**
 ```bash
-docker-compose up -d
+docker-compose up --build -d
 ```
 
 Note: First run will take longer as it downloads AI models.
 
-3. **Access services:**
-
+4. **Access services:**
+- Body Analysis AI: http://localhost:8000
 - RabbitMQ Management: http://localhost:15672 (admin/admin)
 - PostgreSQL: localhost:5432
 
 ## API Documentation
 
 - Auth API Swagger: http://localhost:5000/swagger
+- Body Analysis Swagger: http://localhost:8000/docs
 
 ## Environment Variables
 
@@ -63,14 +64,24 @@ Auth service will auto-migrate database on startup.
 4. **Body Analysis AI slow start**: First run downloads YOLO model (~6MB)
 5. **OpenCV errors**: Rebuild body_analysis_ai container if needed
 
+### Build and start all services:
+```bash
+docker-compose up --build -d
+```
+
 ### Rebuild specific service:
 ```bash
 docker-compose up --build body_analysis_ai
 ```
 
-### Logs:
+### View logs:
 ```bash
 docker-compose logs -f [service_name]
+```
+
+### Stop all services:
+```bash
+docker-compose down
 ```
 
 ## Development
