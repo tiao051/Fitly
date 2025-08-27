@@ -1,8 +1,8 @@
-﻿using auth_services.DTOs;
-using auth_services.Services;
+﻿using AuthServices.DTOs;
+using AuthServices.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace auth_services.Controllers
+namespace AuthServices.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

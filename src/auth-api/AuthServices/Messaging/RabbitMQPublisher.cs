@@ -2,7 +2,7 @@
 using RabbitMQ.Client;
 using System.Text;
 
-namespace auth_services.Messaging
+namespace AuthServices.Messaging
 {
     public class RabbitMQPublisher : IRabbitMQPublisher
     {

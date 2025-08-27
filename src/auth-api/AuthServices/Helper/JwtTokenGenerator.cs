@@ -2,9 +2,9 @@
 using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
-using auth_services.Models;
+using AuthServices.Models;
 
-namespace auth_services.Helpers
+namespace AuthServices.Helpers
 {
     public class JwtTokenGenerator
     {
@@ -12,7 +12,7 @@ namespace auth_services.Helpers
         {
             try
             {
-                // Đọc các biến môi trường
+                // Read environment variables
                 Console.WriteLine("JWT__KEY = " + Environment.GetEnvironmentVariable("JWT__KEY"));
                 var key = Environment.GetEnvironmentVariable("JWT__KEY");
                 if (string.IsNullOrWhiteSpace(key))
@@ -33,7 +33,7 @@ namespace auth_services.Helpers
                 if (!int.TryParse(expiresRaw, out var expires))
                     throw new Exception("JWT__EXPIRESINMINUTES is not a valid integer");
 
-                // Tạo claims
+                // Create claims
                 var claims = new[]
                 {
                     new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
@@ -41,11 +41,11 @@ namespace auth_services.Helpers
                     new Claim(ClaimTypes.Role, user.Role)
                 };
 
-                // Tạo security key
+                // Create security key
                 var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
                 var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
-                // Tạo JWT
+                // Create JWT
                 var token = new JwtSecurityToken(
                     issuer: issuer,
                     audience: audience,
@@ -61,7 +61,7 @@ namespace auth_services.Helpers
             }
             catch (Exception ex)
             {
-                // Ghi log nếu cần
+                // Log if needed
                 Console.WriteLine($"JWT Generation Error: {ex.Message}");
                 throw new Exception($"Failed to generate JWT: {ex.Message}");
             }

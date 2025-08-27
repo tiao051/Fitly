@@ -1,7 +1,7 @@
-﻿using auth_services.Data;
-using auth_services.Messaging;
-using auth_services.Repositories;
-using auth_services.Services;
+﻿using AuthServices.Data;
+using AuthServices.Messaging;
+using AuthServices.Repositories;
+using AuthServices.Services;
 using DotNetEnv;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -11,39 +11,39 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ✅ Load .env chỉ khi chạy local (không phải Docker)
+// Load .env file for local development (not in Docker)
 if (!builder.Environment.IsProduction())
 {
-    Console.WriteLine("🧪 Loading .env file for local development...");
-    DotNetEnv.Env.Load(); // tự động tìm file .env ở thư mục gốc
+    Console.WriteLine("Loading .env file for local development...");
+    DotNetEnv.Env.Load(); // automatically find .env file in root directory
 }
 
-// ✅ Hàm tiện ích để lấy biến môi trường hoặc lỗi rõ ràng
+// Utility function to get environment variable or throw clear error
 string GetEnv(string key)
 {
     var value = Environment.GetEnvironmentVariable(key);
     if (string.IsNullOrEmpty(value))
     {
-        throw new Exception($"❌ ENV '{key}' is null. Check your .env file or docker-compose config.");
+        throw new Exception($"ENV '{key}' is null. Check your .env file or docker-compose config.");
     }
     return value;
 }
 
-// ✅ Lấy thông tin JWT từ biến môi trường
+// Get JWT information from environment variables
 var jwtKey = GetEnv("JWT__KEY");
 var jwtIssuer = GetEnv("JWT__ISSUER");
 var jwtAudience = GetEnv("JWT__AUDIENCE");
 
-// ✅ Kết nối DB (PostgreSQL)
+// Database connection (PostgreSQL)
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("Default")));
 
-// ✅ Đăng ký các services
+// Register services
 builder.Services.AddSingleton<IRabbitMQPublisher, RabbitMQPublisher>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 
-// ✅ JWT Authentication
+// JWT Authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -62,24 +62,24 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-// ✅ Authorization
+// Authorization
 builder.Services.AddAuthorization();
 
-// ✅ Swagger + API
+// Swagger + API
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// ✅ Swagger trong môi trường dev
+// Swagger in development environment
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-// ✅ Middleware
+// Middleware
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();

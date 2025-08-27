@@ -1,11 +1,11 @@
-﻿using auth_services.DTOs;
-using auth_services.Models;
-using auth_services.Repositories;
-using auth_services.Messaging;
-using auth_services.Helpers;
+﻿using AuthServices.DTOs;
+using AuthServices.Models;
+using AuthServices.Repositories;
+using AuthServices.Messaging;
+using AuthServices.Helpers;
 using Newtonsoft.Json;
 
-namespace auth_services.Services
+namespace AuthServices.Services
 {
     public class AuthService : IAuthService
     {

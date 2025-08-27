@@ -1,4 +1,4 @@
-﻿namespace auth_services.Messaging
+﻿namespace AuthServices.Messaging
 {
     public interface IRabbitMQPublisher
     {

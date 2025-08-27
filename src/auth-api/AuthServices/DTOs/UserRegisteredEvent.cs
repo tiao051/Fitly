@@ -1,4 +1,4 @@
-﻿namespace auth_services.DTOs
+﻿namespace AuthServices.DTOs
 {
     public class UserRegisteredEvent
     {

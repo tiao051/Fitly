@@ -1,6 +1,6 @@
-﻿using auth_services.Models;
+﻿using AuthServices.Models;
 
-namespace auth_services.Repositories
+namespace AuthServices.Repositories
 {
     public interface IUserRepository
     {

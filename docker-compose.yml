@@ -29,13 +29,13 @@ services:
 
   auth_services:
     build:
-      context: .
-      dockerfile: Dockerfile.dev
+      context: ./src/auth-api
+      dockerfile: Dockerfile
     container_name: fitly_auth
     volumes:
-      - ./auth_services:/app
-    working_dir: /app/auth_services
-    command: ["dotnet", "watch", "run", "--project", "auth_services.csproj", "--urls=http://0.0.0.0:80"]
+      - ./src/auth-api/AuthServices:/app
+    working_dir: /app
+    command: ["dotnet", "watch", "run", "--project", "AuthServices.csproj", "--urls=http://0.0.0.0:80"]
     ports:
       - "5000:80"
     environment:

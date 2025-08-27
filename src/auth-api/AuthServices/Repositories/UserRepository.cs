@@ -1,8 +1,8 @@
-﻿using auth_services.Data;
-using auth_services.Models;
+﻿using AuthServices.Data;
+using AuthServices.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace auth_services.Repositories
+namespace AuthServices.Repositories
 {
     public class UserRepository : IUserRepository
     {

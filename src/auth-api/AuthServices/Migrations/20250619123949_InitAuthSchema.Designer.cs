@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using auth_services.Data;
+using AuthServices.Data;
 
 #nullable disable
 
-namespace auth_services.Migrations
+namespace AuthServices.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     [Migration("20250619123949_InitAuthSchema")]
