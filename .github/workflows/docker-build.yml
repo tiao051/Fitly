@@ -1,0 +1,40 @@
+name: Docker Build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  docker-build:
+    name: Build Docker Images
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        service: [auth-api, body-analysis-ai]
+        
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+      
+    - name: Build Auth API Docker image
+      if: matrix.service == 'auth-api'
+      run: |
+        cd src/auth-api
+        docker build -t fitly-auth:latest .
+        
+    - name: Build Body Analysis AI Docker image  
+      if: matrix.service == 'body-analysis-ai'
+      run: |
+        cd src/body-analysis-ai/BodyAnalysisAI
+        docker build -t fitly-body-analysis:latest .
+        
+    - name: Test Docker Compose
+      if: matrix.service == 'auth-api'
+      run: |
+        docker-compose config --quiet

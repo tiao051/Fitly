@@ -1,0 +1,72 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-auth-service:
+    name: Build Auth Service
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '9.0.x'
+        
+    - name: Restore dependencies
+      run: dotnet restore src/auth-api/AuthServices.sln
+      
+    - name: Build
+      run: dotnet build src/auth-api/AuthServices.sln --configuration Release --no-restore
+      
+    - name: Test
+      run: dotnet test src/auth-api/AuthServices.sln --no-build --verbosity normal
+
+  build-body-analysis-ai:
+    name: Build Body Analysis AI
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        
+    - name: Install dependencies
+      run: |
+        cd src/body-analysis-ai/BodyAnalysisAI
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        
+    - name: Build Docker image
+      run: |
+        cd src/body-analysis-ai/BodyAnalysisAI
+        docker build -t fitly-body-analysis .
+
+  build-body-analysis-backend:
+    name: Build Body Analysis Backend  
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '9.0.x'
+        
+    - name: Build
+      run: |
+        cd src/body-analysis-ai/BodyAnalysisBackend
+        dotnet build BodyAnalysisBackend.sln --configuration Release
