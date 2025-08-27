@@ -26,13 +26,13 @@ jobs:
     - name: Build
       run: dotnet build src/auth-api/AuthServices.sln --configuration Release --no-restore
       
-    # TODO: Add unit tests later  
-    # - name: Test
-    #   run: dotnet test src/auth-api/AuthServices.sln --no-build --verbosity normal
+    - name: Test
+      run: dotnet test src/auth-api/AuthServices.sln --no-build --verbosity normal
 
   build-body-analysis-ai:
     name: Build Body Analysis AI
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     
     steps:
     - name: Checkout code
