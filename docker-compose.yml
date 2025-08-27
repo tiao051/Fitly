@@ -54,13 +54,13 @@ services:
 
   body_analysis_ai:
     build:
-      context: ./body_analysis_ai_services/body_analysis_ai
+      context: ./src/body-analysis-ai/BodyAnalysisAI
       dockerfile: Dockerfile
     container_name: fitly_body_analysis
     ports:
       - "8000:8000"
     volumes:
-      - ./body_analysis_ai_services/body_analysis_ai:/app
+      - ./src/body-analysis-ai/BodyAnalysisAI:/app
     environment:
       - PYTHONUNBUFFERED=1
 

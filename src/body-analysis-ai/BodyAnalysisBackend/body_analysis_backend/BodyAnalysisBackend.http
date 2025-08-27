@@ -1,0 +1,6 @@
+@body_analysis_ai_services_HostAddress = http://localhost:5210
+
+GET {{body_analysis_ai_services_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
