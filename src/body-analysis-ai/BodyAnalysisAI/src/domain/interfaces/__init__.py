@@ -1,101 +1,47 @@
 """
-Domain Layer - Business Interfaces
-Defines contracts for external dependencies
+Domain Interfaces - Public API
+Clean imports for all domain interface contracts
 """
 
-from abc import ABC, abstractmethod
-from typing import Optional, List
-import numpy as np
+# Pose extraction interface
+from .pose_extractor import IPoseExtractor
 
-from ..entities import (
-    PoseKeypoints, 
-    BodyRatios, 
-    DLEmbeddings, 
-    HybridFeatures, 
-    BodyType, 
-    BodyAnalysisResult
+# Ratio calculation interface  
+from .ratio_calculator import IRatioCalculator
+
+# Machine learning interfaces
+from .ml_interfaces import (
+    IDLFeatureExtractor,
+    IHybridClassifier,
+    IModelManager
 )
 
+# Repository interfaces
+from .repository_interfaces import (
+    IAnalysisRepository,
+    IImageRepository
+)
 
-class IPoseExtractor(ABC):
-    """Interface for pose keypoint extraction"""
-    
-    @abstractmethod
-    async def extract_keypoints(self, image: np.ndarray) -> Optional[PoseKeypoints]:
-        """Extract pose keypoints from image"""
-        pass
-    
-    @abstractmethod
-    def validate_keypoints(self, keypoints: PoseKeypoints) -> bool:
-        """Validate if keypoints are sufficient for analysis"""
-        pass
+# Image processing interface
+from .image_processor import IImageProcessor
 
-
-class IRatioCalculator(ABC):
-    """Interface for body ratio calculation"""
+# Public interface exports
+__all__ = [
+    # Pose detection
+    "IPoseExtractor",
     
-    @abstractmethod
-    def calculate_ratios(self, keypoints: PoseKeypoints) -> BodyRatios:
-        """Calculate body ratios from pose keypoints"""
-        pass
-
-
-class IDLFeatureExtractor(ABC):
-    """Interface for deep learning feature extraction"""
+    # Body measurements
+    "IRatioCalculator", 
     
-    @abstractmethod
-    async def extract_embeddings(self, image: np.ndarray) -> DLEmbeddings:
-        """Extract embeddings using pretrained DL backbone"""
-        pass
+    # Machine learning
+    "IDLFeatureExtractor",
+    "IHybridClassifier", 
+    "IModelManager",
     
-    @abstractmethod
-    def get_embedding_dimension(self) -> int:
-        """Get dimension of embeddings"""
-        pass
-
-
-class IHybridClassifier(ABC):
-    """Interface for hybrid feature classification"""
+    # Data persistence
+    "IAnalysisRepository",
+    "IImageRepository",
     
-    @abstractmethod
-    async def classify(self, features: HybridFeatures) -> tuple[BodyType, float]:
-        """Classify body type from hybrid features"""
-        pass
-    
-    @abstractmethod
-    def is_model_loaded(self) -> bool:
-        """Check if classification model is loaded"""
-        pass
-
-
-class IAnalysisRepository(ABC):
-    """Interface for storing analysis results"""
-    
-    @abstractmethod
-    async def save_result(self, result: BodyAnalysisResult, user_id: Optional[str] = None) -> str:
-        """Save analysis result and return result ID"""
-        pass
-    
-    @abstractmethod
-    async def get_result(self, result_id: str) -> Optional[BodyAnalysisResult]:
-        """Retrieve analysis result by ID"""
-        pass
-    
-    @abstractmethod
-    async def get_user_history(self, user_id: str, limit: int = 10) -> List[BodyAnalysisResult]:
-        """Get user's analysis history"""
-        pass
-
-
-class IImageProcessor(ABC):
-    """Interface for image preprocessing"""
-    
-    @abstractmethod
-    def preprocess_image(self, image: np.ndarray) -> np.ndarray:
-        """Preprocess image for analysis"""
-        pass
-    
-    @abstractmethod
-    def validate_image(self, image: np.ndarray) -> bool:
-        """Validate image quality and format"""
-        pass
+    # Image processing
+    "IImageProcessor"
+]

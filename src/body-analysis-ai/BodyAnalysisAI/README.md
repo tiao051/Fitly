@@ -4,7 +4,7 @@
 
 A sophisticated body type classification system built with Clean Architecture principles, combining deep learning embeddings with traditional machine learning for accurate body shape analysis.
 
-## 🚀 Features
+## Features
 
 ### Hybrid Classification Approach
 - **YOLO Pose**: Advanced pose keypoint extraction
@@ -25,7 +25,7 @@ A sophisticated body type classification system built with Clean Architecture pr
 - **Rectangle**: Similar shoulder, waist & hip measurements
 - **Inverted Triangle**: Shoulders broader than hips
 
-## 🏗️ Architecture Overview
+## Architecture Overview
 
 ```
 ┌─────────────────────────────────────┐
@@ -49,7 +49,7 @@ A sophisticated body type classification system built with Clean Architecture pr
 └─────────────────────────────────────┘
 ```
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 src/
@@ -67,7 +67,7 @@ src/
     └── dto/               # Data transfer objects for API
 ```
 
-## ⚡ Quick Start
+## Quick Start
 
 ### 1. Installation
 
@@ -98,7 +98,7 @@ uvicorn run:app --host 0.0.0.0 --port 8000 --reload
 - **Health Check**: http://localhost:8000/body/health
 - **Service Info**: http://localhost:8000/
 
-## 🔧 API Endpoints
+## API Endpoints
 
 ### Core Analysis
 - `POST /body/analyze` - Analyze body type from image
@@ -110,7 +110,7 @@ uvicorn run:app --host 0.0.0.0 --port 8000 --reload
 - `GET /body/health` - Service health and model status
 - `GET /` - Service information
 
-## 📝 Usage Examples
+## Usage Examples
 
 ### Analyze Body Type
 
@@ -147,7 +147,7 @@ curl -X POST "http://localhost:8000/body/validate" \
      -F "file=@body_image.jpg"
 ```
 
-## 🤖 Machine Learning Pipeline
+## Machine Learning Pipeline
 
 ### 1. Image Preprocessing
 - Resize and normalize images
