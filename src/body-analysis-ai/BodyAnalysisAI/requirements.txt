@@ -1,8 +1,40 @@
+# Core Web Framework
 fastapi==0.104.1
 uvicorn[standard]==0.24.0
-ultralytics==8.0.196
-opencv-python-headless==4.8.1.78
-numpy==1.24.3
-Pillow==10.0.1
 python-multipart==0.0.6
-requests==2.31.0
+
+# Computer Vision & Deep Learning
+opencv-python==4.8.1.78
+ultralytics==8.1.0
+torch==2.1.1
+torchvision==0.16.1
+
+# Machine Learning
+scikit-learn==1.3.2
+joblib==1.3.2
+
+# Data Processing
+numpy==1.26.2
+pandas==2.1.4
+pillow==10.1.0
+
+# API & Data Validation
+pydantic==2.5.0
+
+# Utilities
+python-dotenv==1.0.0
+aiofiles==23.2.1
+
+# Development & Testing
+pytest==7.4.3
+pytest-asyncio==0.21.1
+httpx==0.25.2
+
+# Code Quality
+black==23.11.0
+flake8==6.1.0
+mypy==1.7.1
+
+# Optional: For visualization and analysis
+matplotlib==3.8.2
+seaborn==0.13.0
