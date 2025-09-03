@@ -24,13 +24,17 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from src.presentation.api import router as body_analysis_router
 
-# Configure logging
+# Configure logging with proper directory structure
+log_dir = Path(__file__).parent / "logs"
+log_dir.mkdir(exist_ok=True)
+log_file = log_dir / "body_analysis.log"
+
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
         logging.StreamHandler(),
-        logging.FileHandler('body_analysis.log')
+        logging.FileHandler(log_file)
     ]
 )
 
